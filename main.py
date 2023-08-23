@@ -6,13 +6,10 @@ pygame.init()
 screen_width = 1200
 screen_height = 700
 screen = pygame.display.set_mode((screen_width, screen_height))
-clock = pygame.time.Clock()
 running = True
 
-# Load background image
-# TODO check if pathing can be agnostic
-bg_img = pygame.image.load("./pirates-2023-hy2/assets/floor_1.png")
-bg_img = pygame.transform.scale(bg_img,(screen_width, screen_height))
+# Path to initial background image
+bg_img_path = "./pirates-2023-hy2/assets/floor_1.png" 
 
 while running:
     # poll for events
@@ -21,16 +18,19 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        bg_img_path = "./pirates-2023-hy2/assets/floor_2.png"
+    if keys[pygame.K_s]:
+        bg_img_path = "./pirates-2023-hy2/assets/floor_1.png"
+
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    bg_img = pygame.image.load(bg_img_path)
+    bg_img = pygame.transform.scale(bg_img,(screen_width, screen_height))
     screen.blit(bg_img, (0,0))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
 
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    dt = clock.tick(60) / 1000
-
+#End Game
 pygame.quit()
